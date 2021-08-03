@@ -2,6 +2,7 @@
 public class GrafoTest {
 	public static void main(String[] args) {
 		GrafoLink<String> g = new GrafoLink<String>();
+		GrafoLink<String> g1 = new GrafoLink<String>();
 		
 		/* 
 		//TEST DIJKSTRA 
@@ -31,8 +32,8 @@ public class GrafoTest {
 		g.Dijkstra("PVD");
 		*/
 		
-		
-		//TEST GRAFO, DFS Y BFS
+		/*
+		//TEST GRAFO, DFS Y BFS -- INCLUSION TEST
 		g.insertVert("lima");
 		g.insertVert("aqp");
 		g.insertVert("cusco");
@@ -59,6 +60,20 @@ public class GrafoTest {
 		System.out.println("------------------ IMPRIMIENDO ESTADO DEL GRAFO");
 		System.out.println("\n0 unexp , 1 explored, 2 otro\n"+g);
 		System.out.println("------------------ FIN");
+		
+		
+		g1.insertVert("lima");
+		g1.insertVert("aqp");
+		g1.insertVert("piura");
+		g1.insertVert("puno");
+		g1.insertVert("tacna");
+		
+		g1.insertArista("lima", "aqp", 3,false); //si e
+		g1.insertArista("piura", "lima", 1,false);
+		g1.insertArista("puno", "tacna", 8,false);
+		System.out.println("Grafo ciudades 2:\n"+g1);
+		System.out.println("G1 ESTA INCLUIDO EN G? :"+g1.estaIncluidoEn(g));
+		*/
 		
 		/*
 		g.insertVert("a");

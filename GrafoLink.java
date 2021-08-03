@@ -168,6 +168,83 @@ public class GrafoLink<E> {
 		}
 	}
 	
+
+	private Enlace<Vertice<E>> revisar() { 
+		Enlace<Vertice<E>> aux = this.listVert.cabeza();
+		for(; aux != null; aux = aux.siguiente) {
+			if(aux.valor.label == 0) {
+				return aux;
+			}
+		}
+		return null;
+		
+	}
+	
+	public boolean estaIncluidoEn(GrafoLink<E> b) {
+		Enlace<Vertice<E>> ainicial = this.listVert.cabeza();
+		System.out.println("Revisando desde el vertice: "+ainicial.valor.data);
+		//Para grafos no conexos se tendria que probar con un solo vertice
+		//y aquellos vertices sin revisar, se deberian revisar si estan en el grafo b
+		boolean resultado = estaIncluidoEn(ainicial, b);
+		boolean total = resultado;
+		System.out.println("Resultado: "+resultado);
+		while((ainicial = this.revisar()) != null) {
+			System.out.println("Grafo no conexo revisando siguiente componente desde el vertice: "+ainicial.valor.data);
+			resultado = estaIncluidoEn(ainicial, b);
+			System.out.println("Resultado: "+resultado);
+			total = resultado && total;
+		}
+		return total;
+	}
+	
+	private boolean estaIncluidoEn(Enlace<Vertice<E>> ainicial, GrafoLink<E> b) { //Hace un recorrido BFS pero en el camino
+		QueueLink<Vertice<E>> seq = new QueueLink<>();								//confirma que nuestro grafo b tenga los mismos elementos
+		Vertice<E> v1 = ainicial.valor;												//en grafos conexos solo revisa un componente
+		seq.enqueue(v1);
+		v1.label = 1;
+		Enlace<Arista<E>> aux;
+		while(!seq.isEmpty()) {
+			QueueLink<Vertice<E>> sigSeq = new QueueLink<Vertice<E>>();
+			while(!seq.isEmpty()) {
+				Vertice<E> vert = seq.dequeue();
+				Enlace<Arista<E>> enlacVert = vert.listArt.cabeza();
+				Vertice<E> vert2 = b.listVert.contiene(vert).valor;
+				if(vert2 == null)
+					return false;
+				if(vert.equals(vert2)) {
+					for(; enlacVert != null; enlacVert = enlacVert.siguiente) {
+						
+						if((aux = vert2.listArt.contiene(enlacVert.valor)) != null) {
+							if(aux.valor.weight == enlacVert.valor.weight) {
+								if(enlacVert.valor.label == 0) {
+									Vertice<E> w = enlacVert.valor.refDest;
+									if(w.label == 0) {
+										enlacVert.valor.label = 1;
+										w.label = 1;
+										sigSeq.enqueue(w);
+									} else {
+										enlacVert.valor.label = 2; //cross
+									}
+								}
+							} else {
+								System.out.println("Pesos Diferentes a1"+aux.valor.weight+"-- a2"+enlacVert.valor.weight);
+								return false;
+							}
+						} else {
+							System.out.println("Aristas diferentes ("+enlacVert.valor+")no existe en el grafo parametro");
+							return false;
+						}
+					}
+				} else {
+					System.out.println("Vertices Diferentes v1"+vert.data+"-- v2"+vert2.data);
+					return false;
+				}
+			}
+			seq = sigSeq;
+		}
+		return true;
+	}
+	
 	public String toString() {
 		return this.listVert.toString();
 	}

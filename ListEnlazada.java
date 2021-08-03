@@ -31,22 +31,6 @@ public class ListEnlazada<E> {
     public Enlace<E> cabeza(){
        return this.cabeza;
     }
-    
-    public void insertLast(E x) {
-		if(this.EstaVacio())
-			this.agregar(x);
-		else {
-			Enlace<E> lastNode = getLastNode();
-			lastNode.siguiente = (new Enlace<E>(x));
-		}
-	}
-
-	private Enlace<E> getLastNode() {
-		Enlace<E> aux = this.cabeza();
-		while(aux.siguiente != null)
-			aux = aux.siguiente;
-		return aux;
-	}
 	
     public String toString() {
     	String str = "";

@@ -52,16 +52,6 @@ public class PriorityQueue<E extends Comparable<E>> implements Queue<E> {
 	}
 
 	@Override
-	public E front() {
-		return front.valor;
-	}
-
-	@Override
-	public E back() {
-		return back.valor;
-	}
-
-	@Override
 	public boolean isEmpty() {
 		return this.front == null;
 	}
