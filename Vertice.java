@@ -2,9 +2,9 @@
 public class Vertice<E> implements Comparable<Vertice<E>> {
 	protected E data;
 	protected ListEnlazada<Arista<E>> listArt;
-	protected int label; //0 unexp , 1 explored
+	protected int label; //0 unexp , 1 explored, 2 otro
 	protected int dist; //para algoritmos
-	protected Vertice<E> pats;
+	protected Vertice<E> path;
 
 	public Vertice(E data) {
 		this.data = data;
@@ -24,7 +24,7 @@ public class Vertice<E> implements Comparable<Vertice<E>> {
 	}
 	
 	public String toString() {
-		return this.data+" --> "+this.listArt.toString()+"\n";
+		return this.data+" <"+label+"> --> "+this.listArt.toString()+"\n";
 	}
 	
 	public int compareTo(Vertice<E> v) {

@@ -1,7 +1,8 @@
-
+//codigo de teoria
 public class Arista<E> {
 	protected Vertice<E> refDest; //referencia al vertice
 	protected int weight; //peso en caso de ponderado
+	protected int label; // para algoritmos
 	
 	public Arista(Vertice<E> refDest) {
 		this(refDest, -1);
@@ -21,7 +22,7 @@ public class Arista<E> {
 	}
 	
 	public String toString() {
-		if(this.weight > -1) return refDest.data+" ["+this.weight+"], ";
-		else return refDest.data+", ";
+		if(this.weight > -1) return refDest.data+" <"+label+"> ["+this.weight+"], ";
+		else return refDest.data+" <"+label+">, ";
 	}
 }

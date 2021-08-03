@@ -1,15 +1,7 @@
+
 public class ListEnlazada<E> {
 
-    private class Enlace{
-        public E valor;
-        public Enlace siguiente;
-        public Enlace(E val, Enlace sig){
-            this.valor = val;
-            this.siguiente = sig;
-        }
-    }
-    
-    private Enlace cabeza;
+    private Enlace<E> cabeza;
     
     public ListEnlazada(){
         this.cabeza = null;
@@ -20,14 +12,14 @@ public class ListEnlazada<E> {
     }
     
     public void agregar(E elemento){
-        this.cabeza = new Enlace(elemento, this.cabeza);
+        this.cabeza = new Enlace<E>(elemento, this.cabeza);
     }
 
-    public E contiene(E elemento){
-        Enlace actual = this.cabeza;
+    public Enlace<E> contiene(E elemento){
+        Enlace<E> actual = this.cabeza;
         while(actual != null){
             if (actual.valor.equals(elemento)){
-                return actual.valor;
+                return actual;
             }
             else {
                 actual = actual.siguiente;
@@ -36,9 +28,29 @@ public class ListEnlazada<E> {
         return null;
     }
     
+    public Enlace<E> cabeza(){
+       return this.cabeza;
+    }
+    
+    public void insertLast(E x) {
+		if(this.EstaVacio())
+			this.agregar(x);
+		else {
+			Enlace<E> lastNode = getLastNode();
+			lastNode.siguiente = (new Enlace<E>(x));
+		}
+	}
+
+	private Enlace<E> getLastNode() {
+		Enlace<E> aux = this.cabeza();
+		while(aux.siguiente != null)
+			aux = aux.siguiente;
+		return aux;
+	}
+	
     public String toString() {
     	String str = "";
-    	Enlace aux = this.cabeza;
+    	Enlace<E> aux = this.cabeza;
     	while(aux != null) {
     		str = str + aux.valor;
     		aux = aux.siguiente;
